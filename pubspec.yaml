@@ -19,3 +19,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/paper.jpg
+    - assets/images/rock.jpg
+    - assets/images/scissor.jpg
+    - assets/images/question_mark.jpg

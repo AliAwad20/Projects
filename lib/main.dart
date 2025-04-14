@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MainAp());
@@ -23,22 +22,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //instead of using string for icons, I will use FontAwesomeIcons
-  //I could use list of image instead of FontAwesomeIcons
-  //but I will use FontAwesomeIcons for simplicity
-  //here is the list of images
-  //final List<image> choices = [
-  //  'assets/images/rock.png', 'assets/images/paper.png', 'assets/images/scissors.png']
-  final List<IconData> choices = [
-    FontAwesomeIcons.solidHandScissors,
-    FontAwesomeIcons.solidHand,
-    FontAwesomeIcons.handFist,
+  final List<String> choices = ['✊', '🖐️', '✌️'];
+  List<Image> images = [
+    Image.asset('assets/images/rock.jpg', width: 100, height: 100),
+    Image.asset('assets/images/paper.jpg', width: 100, height: 100),
+    Image.asset('assets/images/scissor.jpg', width: 100, height: 100),
   ];
   int userScore = 0;
   int computerScore = 0;
   int draw = 0;
-  IconData userchoice = Icons.question_mark;
-  IconData computerchoice = Icons.question_mark;
+  String userchoice = '?';
+  String computerchoice = '?';
   String result = '';
 
   void playGame(int userIndex) {
@@ -47,16 +41,16 @@ class _HomePageState extends State<HomePage> {
       int computerIndex = Random().nextInt(3);
       computerchoice = choices[computerIndex];
       if (userIndex == computerIndex) {
-        result = 'draw!';
+        result = "It's a tie 😑";
         draw++;
-      } else if ((userIndex == 0 && computerIndex == 1) ||
-          (userIndex == 1 && computerIndex == 2) ||
-          (userIndex == 2 && computerIndex == 0)) {
-        result = 'You win!';
+      } else if ((userIndex == 1 && computerIndex == 0) ||
+          (userIndex == 0 && computerIndex == 2) ||
+          (userIndex == 2 && computerIndex == 1)) {
+        result = 'You win 🥳';
         userScore++;
       } else {
         computerScore++;
-        result = 'You lose!';
+        result = 'You lose 😢';
       }
     });
   }
@@ -66,8 +60,8 @@ class _HomePageState extends State<HomePage> {
       userScore = 0;
       computerScore = 0;
       draw = 0;
-      userchoice = Icons.question_mark;
-      computerchoice = Icons.question_mark;
+      userchoice = '?';
+      computerchoice = '?';
       result = '';
     });
   }
@@ -112,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(width: 10),
-                  Icon(userchoice, size: 30, color: Colors.red),
+                  Text(userchoice, style: TextStyle(fontSize: 35,color: Colors.red, fontWeight: FontWeight.bold)),
                 ],
               ),
 
@@ -120,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Computer: ',
+                    'Computer:',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -128,10 +122,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   SizedBox(width: 20),
-                  Icon(computerchoice, size: 30, color: Colors.red),
+                  Text(computerchoice, style: TextStyle(fontSize: 35, color: Colors.red, fontWeight: FontWeight.bold)),
                 ],
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 40),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 //here I used List.generate to create a list of 3 icons
@@ -141,13 +135,15 @@ class _HomePageState extends State<HomePage> {
                       playGame(index);
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
-                      padding: EdgeInsets.all(25),
+                      margin: EdgeInsets.symmetric(horizontal: 40),
+                     width: 100,
+                    height: 100,
+                    clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(choices[index], size: 30, color: Colors.red),
+                        color: Colors.transparent,
+                       
+                    ),
+                      child: images[index],
                     ),
                   );
                 }),
@@ -164,7 +160,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 20),
               Text(
                 'Your score: $userScore   Computer score: $computerScore    draw: $draw',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 30),
               IconButton(
@@ -180,7 +176,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Text(
                 'Click To Reset The Game',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+                style: TextStyle(color: Colors.white, fontSize: 24,fontWeight: FontWeight.bold),
               ),
             ],
           ),
